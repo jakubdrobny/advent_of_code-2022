@@ -12,24 +12,19 @@ int main() {
 
   int maxScenicScore = 0;
 
-  int N = (int)grid.size() + 2, M = grid[0].size() + 2;
+  int N = (int)grid.size(), M = grid[0].size();
 
-  grid.insert(grid.begin(), string(M, '9'));
-  grid.push_back(string(M, '9'));
-
-  for (int i = 1; i < N - 1; i++) grid[i] = "9" + grid[i] + "9";
-
-  for (int i = 1; i < N - 1; i++) {
-    for (int j = 1; j < M - 1; j++) {
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < M; j++) {
       int up = 1, down = 1, left = 1, right = 1;
-      while (grid[i][j] > grid[i - up][j]) up++;
-      while (grid[i][j] > grid[i + down][j]) down++;
-      while (grid[i][j] > grid[i][j - left]) left++;
-      while (grid[i][j] > grid[i][j + right]) right++;
-      if (i - up == 0) up--;
-      if (i + down == N - 1) down--;
-      if (j - left == 0) left--;
-      if (j + right == M - 1) right--;
+      while (i - up >= 0 && grid[i][j] > grid[i - up][j]) up++;
+      while (i + down < N && grid[i][j] > grid[i + down][j]) down++;
+      while (j - left >= 0 && grid[i][j] > grid[i][j - left]) left++;
+      while (j + right < M && grid[i][j] > grid[i][j + right]) right++;
+      if (i - up < 0) up--;
+      if (i + down > N - 1) down--;
+      if (j - left < 0) left--;
+      if (j + right > M - 1) right--;
       maxScenicScore = max(maxScenicScore, up * down * left * right);
     }
   }
