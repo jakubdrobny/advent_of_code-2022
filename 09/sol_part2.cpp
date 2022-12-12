@@ -25,7 +25,7 @@ void maxCoordinates(vector<pair<int, char>> &moves) {
     mnx = min(mnx, x), mxx = max(mxx, x);
     mny = min(mny, y), mxy = max(mxy, y);
   }
-  cout << mnx << " " << mny << "," << mxx << " " << mxy << "\n";
+  // cout << mnx << " " << mny << "," << mxx << " " << mxy << "\n";
 }
 
 void printSnake(vector<pair<int, int>> snake) {
@@ -57,7 +57,7 @@ int main() {
     int count = m.second;
     for (int i = 0; i < count; i++) {
       makeMove(snake[0].first, snake[0].second, direction, 1);
-      for (int j = 1; j < 10; j++) {
+      for (int j = 1; j < (int)snake.size(); j++) {
         int &xh = snake[j - 1].first, &xt = snake[j].first,
             &yh = snake[j - 1].second, &yt = snake[j].second;
         int dx = abs(xh - xt), dy = abs(yh - yt);
@@ -79,12 +79,21 @@ int main() {
             yt--;
           else
             yt++;
-        } else {
+        } else if (dx == 2 && dy == 1) {
           yt = yh;
           if (xt > xh)
             xt--;
           else
             xt++;
+        } else {
+          if (xt > xh)
+            xt--;
+          else
+            xt++;
+          if (yt > yh)
+            yt--;
+          else
+            yt++;
         }
       }
       visited.insert(snake.back());
@@ -92,7 +101,7 @@ int main() {
     }
   }
 
-  // cout << (int)visited.size() << "\n";
+  cout << (int)visited.size() << "\n";
 
   return 0;
 }
